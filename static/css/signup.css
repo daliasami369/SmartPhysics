@@ -1,0 +1,351 @@
+body{
+background-color:#1a274f;
+padding: 0px;
+border-radius: 20px;
+}
+.head{
+      font-weight: bold;
+    font-size: 22px;
+    font-family: 'Courier New', Courier, monospace;
+     background-color:#030c27;
+     color: rgb(203, 129, 32);
+     margin-bottom: 10px;
+     margin-left: 10px;
+     margin-right: 10px;
+      border-radius: 10px;
+      justify-content: space-between;
+    z-index: 1000;
+    position: relative;
+    display: flex;
+    margin-bottom: 5px;
+    align-items: center;
+    padding: 10px;
+
+
+}
+.teacher{
+      color: rgb(203, 129, 32);
+     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+
+}
+
+.logo{
+    width: 80px;
+    height: 60px;
+    align-items: center;
+}
+.hero{
+    height: 500px;
+    background-color:#030c27;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+
+}
+.hero_img{
+  width: 20%;
+  margin-right: auto;
+  margin-top: 10px;
+}
+.hero_img img{
+    width: 100%;
+    height: 95%;
+    
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgb(0,0,0,0,3);
+}
+.hero_text {
+    width: 50%;
+     padding-left: 10px;
+     margin-left: auto;
+}
+.hero_text h3{
+    color:#7c3aed;
+    font-size: 50px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 20px;
+}
+
+.hero_text p{
+    font-size: 25px;
+    font-family: 'Courier New', Courier, monospace;
+    color:#7c3aed;
+    margin-bottom: 30px;
+   
+}
+
+.pill-title{
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #0a0f1a;
+}
+.pill-desc{
+    font-size: .9 rem;
+    color: #555;
+    font-weight: normal;
+}
+.content{
+     background-color:#030c27;
+     display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* margin: 40px 0; */
+    padding:40px;
+
+    border-radius:25px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+
+    margin: 10px;
+
+    
+}
+.container{
+    width:20%;
+    font-family: 'Courier New', Courier, monospace;
+    color:#7c3aed;
+    background:#f1e6ff;
+
+    border-radius:18px;
+
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:20px;
+
+    margin-bottom:18px;
+
+    cursor:pointer;
+
+    transition:.35s;
+    opacity: .8;
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
+}
+.title{
+    font-size: 2.5rem;
+    color: #4d8cff;
+    margin-bottom: 40px;
+    text-align: center;
+    padding-top: 10px;
+}
+.levels{
+    background-color: #030c27;
+    border-radius: 20px;
+    margin: 10px;
+
+}
+.level{
+    display: flex;
+    gap:20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.level-card{
+     background-color:#1a2233;
+     color: #7c3aed;
+     display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding:40px;
+    border:1px solid #2c3a5a;
+    width:280px;
+    border-radius:15px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+
+    margin: 10px;
+
+    
+}
+.level-card h2{
+  color:#4d8cff;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 20px;
+   
+}
+
+
+.btn-start{
+    background-color: white;
+    color: #0a0f1a;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+
+}
+.btn-start :hover{
+    background-color: #ff9f1c;
+    color: white;
+}
+#signupmodel{
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,.6);
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    backdrop-filter: blur(5px);
+
+    z-index: 9999;
+}
+ #loginmodel{
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,.6);
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    backdrop-filter: blur(5px);
+
+    z-index: 9999;
+}
+
+.signup-card , .login-card{
+
+    position: relative;
+
+    width: 500px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 35px;
+}
+.signup-card input[type=text],
+.signup-card input[type=password],
+.signup-card input[type=email],
+.signup-card input[type=tel] ,
+.login-card input[type=text],
+.login-card input[type=password],
+.login-card input[type=email]{
+
+    width:100%;
+
+    padding:15px;
+
+    margin-top:15px;
+
+    border-radius:10px;
+
+    border:1px solid #ddd;
+
+    font-size:16px;
+
+    box-sizing:border-box;
+}
+.levels-radio{
+
+    margin:20px 0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+}
+
+.levels-radio label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:18px;
+}
+.signup-btn , .login-btn{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563EB;
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+}
+
+.signup-btn:hover , .login-btn:hover{
+
+    background:#1D4ED8;
+}
+.close-btn{
+
+    position:absolute;
+
+    top:15px;
+
+    right:15px;
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    background:#f3f4f6;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:20px;
+}
+#signupMessage{
+    display: none;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
+    transition: .3s;
+}
+
+#signupMessage.success{
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #28a745;
+}
+
+#signupMessage.error{
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #dc3545;
+}
+
+
+/* https://www.figma.com/design/Sfimz5pbafT9Rh0tQKOFuo/Untitled?node-id=1-2&m=dev&t=CjTZA1GyZNUl84fk-1 */

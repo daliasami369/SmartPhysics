@@ -1,0 +1,363 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/student.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Student Page</title>
+</head>
+<body>
+
+ 
+    <div   class="layout">
+
+
+<div class="left">
+   <div class="section-card">
+    <h3>Latest Announcements</h3>
+
+    {% for announcement in announcements %}
+        <div class="announcement-item">
+            <strong>{{ announcement.title }}</strong>
+            <p>{{ announcement.message }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+  <div class="section-card">
+    <h3>Upcoming Lessons</h3>
+
+    {% for lesson in lessons %}
+        <p>{{ lesson.title }}</p>
+    {% endfor %}
+</div>
+
+    </div>
+       
+
+<div class="main"  id="homeSection"  style="display: block;">
+
+     <div class="top-bar">
+
+      <div class="student-info">
+
+    {% if students.image %}
+        <img src="{{ students.image.url }}" class="profile">
+    {% else %}
+        <div class="profile-svg">
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="35" r="20" fill="#ffffff"/>
+                <path d="M20 88c0-17 13-30 30-30s30 13 30 30"
+                      fill="#ffffff"/>
+            </svg>
+        </div>
+    {% endif %}
+
+    <div>
+        <h2 id="studentName" >مرحباً {{ username }}</h2>
+        <p>مستعد لاستكشاف الفيزياء؟</p>
+    </div>
+
+</div>
+
+        <input type="search" placeholder="ابحث عن درس..." id="search">
+
+    </div>
+
+
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>الواجبات</h2>
+           <h2>{{ homeworks_count }}</h2>
+        </div>
+
+        <div class="card">
+            <h2>المحاضرات</h2>
+            <h2>{{ lessons_count }}</h2>
+        </div>
+
+        <div class="card">
+            <h2>ساعات التعلم</h2>
+            <h2>{{ learning_hours }}</h2>
+        </div>
+
+        <div class="card">
+            <h2>الاختبارات</h2>
+            <h2>{{ tests_count }}</h2>
+        </div>
+
+    </div>
+
+
+
+    <div class="banner">
+
+    <img src="{% static 'images/logo_physics.png' %}" class="banner-image">
+
+</div>
+
+</div>
+
+ <!-- AnnouncementSection -->
+
+<div id="announcementsSection" style="display:none">
+
+    <h2>الإعلانات</h2>
+
+    {% for announcement in announcements %}
+
+<div class="announcement-card">
+
+    <h3>{{ announcement.title }}</h3>
+
+   <p>{{ announcement.message }}</p>
+
+    <small>{{ announcement.created_at }}</small>
+
+</div>
+
+{% empty %}
+
+<p>لا توجد إعلانات.</p>
+
+{% endfor %}
+
+</div>
+
+
+  <!-- //ChatSection -->
+
+    <div id="chatSection" style="display:none;">
+
+    <h2 id="chatTitle">Chat</h2>
+
+    <h3 id="chatTeacher"></h3>
+
+    <div class="chat-box" id="chatBox"></div>
+
+    <input
+        type="text"
+        id="studentMessage"
+        placeholder="Type your message...">
+
+    <button onclick="sendMessage()">
+        Send
+    </button>
+
+</div>
+   
+
+   <!-- //LessonsSection -->
+
+   <div id="lessonsSection" style="display:none;">
+
+    <h2>My Lessons</h2>
+{% for lesson in lessons %}
+
+<div class="lesson-card">
+
+    <h3>{{ lesson.title }}</h3>
+
+    <p>{{ lesson.description }}</p>
+
+    <p>{{ lesson.price }} جنيه</p>
+
+    {% if lesson.id in paid_lessons %}
+
+        <a href="{% url 'watch_video' lesson.id %}">
+            ▶ مشاهدة الدرس
+        </a>
+
+    {% else %}
+
+         <a href="{% url 'lesson_payment' lesson.id %}" class="pay-btn"> 🔒 ادفع لفتح الدرس </a>
+
+    {% endif %}
+
+</div>
+
+{% endfor %}
+</div>
+
+   <!-- //TestsSection -->
+
+   <div id="testsSection" style="display:none;">
+
+    <h2>My Tests</h2>
+          {% for test in tests %}
+    <div class="test-card">
+        <h3>{{ test.title }}</h3>
+        <p>المدة: {{ test.duration }} دقيقة</p>
+        <p>الدرجة النهائية: {{ test.total_marks }}</p>
+        <a href="{% url 'take_test' test.id %}">ابدأ الاختبار</a>
+    </div>
+{% empty %}
+    <p>لا توجد اختبارات حالياً.</p>
+{% endfor %}
+
+
+
+</div>
+      
+
+ <!-- ProfileSection -->
+
+           <div id="profileSection" style="display:none">
+
+    <h2>الملف الشخصي</h2>
+<form method="post">
+
+  <input type="text" id="username" value="{{ username }}" disabled>
+
+    <input type="email" id="email" value="{{ email }}" disabled>
+
+    <input type="text" id="phone" value="{{ phone }}" disabled>
+
+    <button type="button" id="editBtn" onclick="editdata()">
+        تعديل البيانات
+    </button>
+
+</form>
+   
+</div>
+        <!-- HOMEWORKSECTIONS -->
+         <div id="homeworkSection" style="display:none;">
+
+    <h2>📚 الواجبات</h2>
+
+    {% for homework in homeworks %}
+
+    <div class="homework-card">
+
+        <h3>{{ homework.title }}</h3>
+
+        <p>{{ homework.description }}</p>
+
+        <p>
+            موعد التسليم:
+            {{ homework.deadline }}
+        </p>
+
+        {% if homework.file %}
+        <a href="{{ homework.file.url }}" download>
+            📄 تحميل ملف الواجب
+        </a>
+        {% endif %}
+
+    </div>
+
+    {% empty %}
+
+    <p>لا توجد واجبات حالياً.</p>
+
+    {% endfor %}
+
+</div>
+
+    <!-- SettingSection -->
+
+
+    <div id="settingsSection" class="content-section">
+
+    <h1><i class="fa-solid fa-gear"></i>  الإعدادات</h1>
+
+    <div class="setting-card">
+
+        <div class="setting-info">
+            <h2><i class="fa-solid fa-moon"></i> الوضع الليلي</h2>
+            <p>تفعيل أو إيقاف الوضع الليلي.</p>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox" id="darkMode">
+            <span class="slider"></span>
+        </label>
+
+    </div>
+    <br>
+    <br>
+
+    <div class="setting-card">
+
+        <div class="setting-info">
+            <h2><i class="fa-solid fa-bell"></i> الإشعارات</h2>
+            <p>استقبال إعلانات ورسائل المدرس.</p>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+        </label>
+
+    </div>
+
+    <br>
+    <br>
+
+    <div class="setting-card">
+
+    <div class="setting-info">
+        <h3><i class="fa-solid fa-lock"></i> كلمة المرور</h3>
+
+        <input
+            type="password"
+            id="pass"
+            placeholder="كلمة المرور الجديدة"
+            disabled>
+
+        <input
+            type="password"
+            id="confirmPass"
+            placeholder="تأكيد كلمة المرور"
+            hidden>
+
+    </div>
+
+    <button
+        id="passBtn"
+        class="change-btn"
+        onclick="changePassword()">
+        تغيير
+    </button>
+
+</div>
+
+</div>
+
+
+
+ <div class="sidebar">
+
+   <p class="logo"><img src="{% static 'images/logo2.png' %}" ></p> 
+    <ul class="dashboard">
+         <li><a href="#" onclick="showSection('home');return false;">🏠 الرئيسية</a></li>
+            <li><a href="#" onclick="showSection('lessons');return false;">  🎥 المحاضرات</a></li>
+            <li><a href="#" onclick="showSection('tests');return false;"> 📝 الاختبارات</a></li>
+            <li><a href="#" onclick="showSection('homework');return false;"> 📚 الواجبات</a></li>
+            <li><a href="#" onclick="showSection('chat');return false;">💬 الرسائل</a></li>
+            <li><a href="#" onclick="showSection('announcements');return false;">📢 الإعلانات</a></li>
+            <li> <a href="#" onclick="showSection('profile');return false;"> 👤 الملف الشخصي </a> </li>
+            <li><a href="#" onclick="showSection('settings');return false;">⚙️ الإعدادات</a></li>
+            <li>
+                <a href="{% url 'signup' %}">Logout</a>
+            </li>
+            <li> <img src="{% static 'images/physic.png' %}" class="logo2"></li>
+    </ul>
+
+</div>
+
+
+
+
+
+</div>
+<script src="{% static 'js/student.js' %}"></script>
+</body>
+</html>
+
+

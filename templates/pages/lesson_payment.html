@@ -1,0 +1,206 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Payment</title>
+</head>
+<style>
+   *{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+
+background:#eef3ff;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:100vh;
+
+}
+
+.payment-box{
+
+width:550px;
+
+background:white;
+
+padding:40px;
+
+border-radius:20px;
+
+box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+text-align:center;
+
+}
+
+.payment-box h1{
+
+color:#265df2;
+
+margin-bottom:25px;
+
+}
+
+.payment-box h2{
+
+margin-bottom:15px;
+
+}
+
+.price{
+
+font-size:22px;
+
+margin:20px 0;
+
+}
+
+.price span{
+
+color:#265df2;
+
+font-weight:bold;
+
+}
+
+.pay-info{
+
+background:#f6f8ff;
+
+padding:20px;
+
+border-radius:15px;
+
+margin-bottom:25px;
+
+}
+
+.pay-info h2{
+
+color:#265df2;
+
+margin:10px 0;
+
+}
+
+label{
+
+display:block;
+
+font-weight:bold;
+
+margin-bottom:10px;
+
+}
+
+input[type=file]{
+
+width:100%;
+
+padding:12px;
+
+border:2px dashed #265df2;
+
+border-radius:10px;
+
+margin-bottom:25px;
+
+cursor:pointer;
+
+}
+
+button{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+background:#265df2;
+
+color:white;
+
+font-size:20px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+button:hover{
+
+background:#1847cf;
+
+}
+</style>
+<body>
+<div class="payment-box">
+
+<h1>💳 دفع ثمن الدرس</h1>
+
+<h2>{{ lesson.title }}</h2>
+
+<p class="price">
+السعر :
+<span>{{ lesson.price }}</span>
+جنيه
+</p>
+
+<div class="pay-info">
+
+<h3>طرق الدفع</h3>
+
+<p>
+📱 Vodafone Cash
+</p>
+
+<h2>01098505909</h2>
+
+<p>أو</p>
+
+<h2>smartphysics@instapay</h2>
+
+</div>
+
+<form
+    id="paymentForm"
+    method="POST"
+    enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <label>صورة إيصال التحويل</label>
+
+    <input
+        type="file"
+        id="receipt"
+        name="receipt"
+        accept="image/*"
+        required>
+
+    <button type="submit">
+        إرسال طلب الدفع
+    </button>
+
+</form>
+
+</div>
+<script src="{% static 'js/lesson_payment.js' %}"></script>
+</body>
+</html>

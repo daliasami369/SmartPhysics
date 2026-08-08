@@ -1,0 +1,540 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/teacher.css' %}">
+    <title>Teacher Page </title>
+</head>
+
+<body>
+    <div class="head">
+        <nav class="navbar">
+            <img src="{% static 'images/logo1.png' %}" alt="logo" class="logo">
+            Smart Physics
+        </nav>
+        <div class="welcome">
+
+            <h1>مرحباً م/ عصام حسين 👋</h1>
+
+            <p>
+                يمكنك إدارة المحاضرات والاختبارات والإعلانات ومتابعة الطلاب من هنا.
+            </p>
+
+        </div>
+    </div>
+
+
+    <div class="layout">
+
+
+
+        <div class="sidebar">
+
+            <img src="{% static 'images/logo1.png' %}" class="logo">
+
+            <ul class="dashboard">
+                <li><a href="#" onclick="showSection('home');return false;">🏠 الرئيسية</a></li>
+                <li><a href="#" onclick="showSection('students');return false;"> 👨‍🎓 الطلاب</a></li>
+                <li><a href="#" onclick="showSection('homework');return false;">📝 واجبات </a></li>
+                <li><a href="#" onclick="showSection('lessons');return false;"> 🎥 المحاضرات</a></li>
+                <li><a href="#" onclick="showSection('tests');return false;"> 📝 الاختبارات</a></li>
+                <li><a href="#" onclick="showSection('chat');return false;">💬 الرسائل</a></li>
+                <li><a href="#" onclick="showSection('announcements');return false;">📢 الإعلانات</a></li>
+                <li><a href="#" onclick="showSection('statistics');return false;"> 📊 الإحصائيات</a></li>
+                <li><a href="#" onclick="showSection('subscriptions');return false;"> 💳الاشتراكات</a></li>
+                <li> <a href="#" onclick="showSection('profile');return false;"> 👤 الملف الشخصي </a> </li>
+                <li><a href="#" onclick="showSection('settings');return false;">⚙️ الإعدادات</a></li>
+                <li>
+                    <a href="{% url 'signup' %}">🚪 تسجيل الخروج</a>
+                </li>
+            </ul>
+            <img src="{% static 'images/physic.png' %}" class="logo2">
+        </div>
+
+
+
+
+        <div class="main">
+            <div class="Quick_Actions">
+                <button id="addLecture" onclick='showSection("lessons")'>إضافة محاضرة</button>
+                <button id="addTest" onclick='showSection("tests")'>إضافة اختبار</button>
+                <button id="addAnnouncement" onclick=' showSection("announcements")'>إضافة إعلان</button>
+                <button id="addHomework" onclick='showSection("homework")'>إضافة واجب</button>
+
+            </div>
+            <div id="homeSection">
+                <div class="dashboard-cards">
+
+                    <div class="dash-card">
+                        <span>👨‍🎓</span>
+                        <h3>الطلاب</h3>
+                        <h1>{{ students_count }}</h1>
+                    </div>
+
+                    <div class="dash-card">
+                        <span>🎥</span>
+                        <h3>المحاضرات</h3>
+                        <h1>{{ lessons_count }}</h1>
+                    </div>
+
+                    <div class="dash-card">
+                        <span>📝</span>
+                        <h3>الاختبارات</h3>
+                        <h1>{{ tests_count }}</h1>
+                    </div>
+
+                    <div class="dash-card">
+                        <span>💳</span>
+                        <h3>الاشتراكات</h3>
+                        <h1>{{ payments.count }}</h1>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENTS -->
+
+            <div id="mystudentsSection" style="display:none;">
+
+                <h2>👨‍🎓 الطلاب</h2>
+
+                <div class="students-grid">
+
+                    {% for student in students %}
+
+                    <div class="student-card">
+
+                        <div class="student-avatar">
+                            {{ student.username|first|upper }}
+                        </div>
+
+                        <div class="student-info">
+
+                            <h3>
+                                {{ student.username }}
+                            </h3>
+
+                            <p>{{ student.level }}</p>
+
+                        </div>
+
+                    </div>
+
+                    {% empty %}
+
+                    <p>لا يوجد طلاب حتى الآن</p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            <!-- ANNOUNCEMENTS -->
+            <div id="announcementsSection" style="display:none;">
+
+                <h2>Announcements</h2>
+
+                <form id="announcementForm">
+
+                    {% csrf_token %}
+
+                    <p>Title</p>
+                    <input type="text" id="title">
+
+                    <p>Message</p>
+                    <input type="text" id="message">
+
+                    <select id="AnnouncementLevel">
+                        <option value="الصف الاول الثانوي">الصف الاول الثانوي</option>
+                        <option value="الصف الثاني الثانوي">الصف الثاني الثانوي</option>
+                        <option value="الصف الثالث الثانوي">الصف الثالث الثانوي</option>
+                    </select>
+
+                    <button type="submit">
+                        Send
+                    </button>
+
+                </form>
+
+            </div>
+            <!-- LECTURES -->
+
+            <div id="lessonsSection" style="display:none;">
+
+                <h2>Add Lesson</h2>
+                <div class="lesson-form">
+                    <input type="text" id="lessonTitle" placeholder="Lesson title">
+
+                    <input type="text" id="lessonDescription" placeholder="Lesson description">
+                    <input type="text" id="lessonLink" placeholder="Lesson Link">
+                    <input type="file" id="lessonPdf" placeholder="lessonPdf">
+                    <input type="number" id="lessonPrice" placeholder="سعر الدرس">
+                    <select id="lessonLevel">
+                        <option value="First">الصف الاول الثانوي </option>
+                        <option value="Second">الصف الثاني الثانوي </option>
+                        <option value="Third">الصف الثالث الثانوي </option>
+                    </select>
+                    <button onclick="addLesson()"> Add Lesson </button>
+                </div>
+            </div>
+
+
+            <!-- CHATS -->
+
+            <div id="chatSection" style="display:none;">
+
+                <h2 id="chatTitle">Chats</h2>
+
+                <h3 id="chatStudent"></h3>
+
+                <div id="chatBox" class="chat-box"></div>
+
+                <input type="hidden" id="studentId">
+
+                <input type="text" id="teacherMessage" placeholder="Type your message...">
+
+                <button onclick="sendTeacherMessage()">
+                    Send
+                </button>
+
+                <hr>
+
+                <h3>Students</h3>
+
+                {% for student in students_with_messages %}
+
+                <button onclick="openTeacherChat(
+                {{ student.id }},
+                ' {{ student.username }}'
+            )">
+
+                    {{ student.username }}
+
+                </button>
+
+                {% empty %}
+
+                <p>No students yet.</p>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- TESTS -->
+
+            <div id="testsSection" style="display:none;">
+
+                <h2>Create Test</h2>
+                <form id="testForm">
+                    <input type="text" id="testTitle" placeholder="Test Title">
+
+                    <input type="number" id="duration" placeholder="Duration">
+
+                    <input type="number" id="totalMarks" placeholder="Total Marks">
+                    <select id="testLevel">
+                        <option value="First">الصف الاول الثانوي </option>
+                        <option value="Second">الصف الثاني الثانوي </option>
+                        <option value="Third">الصف الثالث الثانوي </option>
+                    </select>
+
+                    <button type="submit"> Create Test </button>
+
+                </form>
+
+                {% for test in tests %}
+
+                <h3>{{ test.title }}</h3>
+
+                <a href="{% url 'test_results' test.id %}">
+                    عرض نتائج الطلاب
+                </a>
+
+                {% endfor %}
+            </div>
+
+            <div id="questionsSection" style="display:none;">
+
+                <h2>Add Question</h2>
+
+                <input id="questionText" placeholder="Question">
+
+                <input id="choiceA" placeholder="Choice A">
+
+                <input id="choiceB" placeholder="Choice B">
+
+                <input id="choiceC" placeholder="Choice C">
+
+                <input id="choiceD" placeholder="Choice D">
+
+                <input id="mark" type="number" placeholder="Mark">
+                <br>
+
+                <label><input type="radio" name="correct" value="A">A</label>
+
+                <label><input type="radio" name="correct" value="B">B</label>
+
+                <label><input type="radio" name="correct" value="C">C</label>
+
+                <label><input type="radio" name="correct" value="D">D</label>
+                <br>
+
+                <button onclick="addQuestion()">
+                    Add Question
+                </button>
+
+                <button onclick="finishTest()">
+                    Finish Test
+                </button>
+
+            </div>
+
+            <!-- HOMESECTION -->
+
+            <div id="homeworkSection" class="content-section" style="display:none;">
+
+                <h2>➕ إضافة واجب جديد</h2>
+
+                <form id="homeworkForm" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    <input id="homeworkTitle" placeholder="أضف عنوان الدرس ">
+
+                    <textarea id="homeworkDescription" placeholder="أضف وصف للدرس"></textarea>
+
+                    <select id="homeworkLevel">
+                        <option value="First">الصف الاول الثانوي </option>
+                        <option value="Second">الصف الثاني الثانوي </option>
+                        <option value="Third">الصف الثالث الثانوي </option>
+                    </select>
+
+                    <input type="file" id="homeworkFile">
+
+                    <input type="date" id="deadline">
+
+                    <button type="button" onclick="addHomework()">
+                        إضافة الواجب
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- STATISTICS -->
+
+            <div id="statisticsSection" style="display:none;" class="statistics">
+
+                <h2>📊 إحصائيات المنصة</h2>
+
+                <div class="dashboard-cards">
+
+                    <div class="dash-card">
+                        <span>👨‍🎓</span>
+                        <h3>عدد الطلاب</h3>
+                        <h1>{{ students_count }}</h1>
+                    </div>
+
+                    <div class="dash-card">
+                        <span>💳</span>
+                        <h3>الطلاب المشتركون</h3>
+                        <h1>{{ paid_students }}</h1>
+                    </div>
+
+                    <div class="dash-card">
+                        <span>❌</span>
+                        <h3>غير المشتركين</h3>
+                        <h1>{{ unpaid_students }}</h1>
+                    </div>
+
+                    <div class="dash-card">
+                        <span>🎥</span>
+                        <h3>المحاضرات</h3>
+                        <h1>{{ lessons_count }}</h1>
+                    </div>
+
+                    <div class="dash-card">
+                        <span>📝</span>
+                        <h3>الاختبارات</h3>
+                        <h1>{{ tests_count }}</h1>
+                    </div>
+
+                    <div class="dash-card">
+                        <span>📚</span>
+                        <h3>الواجبات</h3>
+                        <h1>{{ homework_count }}</h1>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- SUBSCRIPTIONS -->
+
+            <div id="subscriptionsSection" style="display:none;">
+
+                <h2>💳 الاشتراكات</h2>
+
+                <table class="sub-table">
+
+                    <tr>
+                        <th>الطالب</th>
+                        <th>المحاضرة</th>
+                        <th>الإيصال</th>
+                        <th>الحالة</th>
+                        <th>الإجراء</th>
+                    </tr>
+
+                    {% for payment in payments %}
+
+                    <tr>
+
+                        <td>{{ payment.student.username }}</td>
+
+                        <td>{{ payment.lesson.title }}</td>
+
+                        <td>
+
+                            {% if payment.receipt %}
+                            <a href="{{ payment.receipt.url }}" target="_blank">
+                                <img src="{{ payment.receipt.url }}" class="receipt-img">
+                            </a>
+                            {% else %}
+                            لا يوجد
+                            {% endif %}
+
+                        </td>
+
+                        <td>{{ payment.status }}</td>
+
+                        <td>
+
+                            {% if payment.status == "Pending" %}
+
+                            <a href="{% url 'approve_payment' payment.id %}" class="approve-btn">
+                                قبول
+                            </a>
+
+                            <a href="{% url 'reject_payment' payment.id %}" class="reject-btn">
+                                رفض
+                            </a>
+
+                            {% else %}
+
+                            تمت المراجعة
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="5">
+                            لا توجد طلبات دفع
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+            <!-- PROFILE -->
+
+            <div id="profileSection" style="display:none">
+
+                <h2>الملف الشخصي</h2>
+                <form method="post">
+
+                    <input type="text" id="username" value="{{ username }}" disabled>
+
+                    <input type="email" id="email" value="{{ email }}" disabled>
+
+                    <input type="text" id="phone" value="{{ phone }}" disabled>
+
+                    <button type="button" id="editBtn" onclick="editdata()">
+                        تعديل البيانات
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- SETTINGS -->
+
+            <div id="settingsSection" class="content-section" style="display: none;">
+
+                <h1><i class="fa-solid fa-gear"></i> الإعدادات</h1>
+
+                <div class="setting-card">
+
+                    <div class="setting-info">
+                        <h2><i class="fa-solid fa-moon"></i> الوضع الليلي</h2>
+                        <p>تفعيل أو إيقاف الوضع الليلي.</p>
+                    </div>
+
+                    <label class="switch">
+                        <input type="checkbox" id="darkMode">
+                        <span class="slider"></span>
+                    </label>
+
+                </div>
+                <br>
+                <br>
+
+                <div class="setting-card">
+
+                    <div class="setting-info">
+                        <h2><i class="fa-solid fa-bell"></i> الإشعارات</h2>
+                        <p>استقبال إعلانات ورسائل المدرس.</p>
+                    </div>
+
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+
+                </div>
+
+                <br>
+                <br>
+
+                <div class="setting-card">
+
+                    <div class="setting-info">
+                        <h3><i class="fa-solid fa-lock"></i> كلمة المرور</h3>
+
+                        <input type="password" id="pass" placeholder="كلمة المرور الجديدة" disabled>
+
+                        <input type="password" id="confirmPass" placeholder="تأكيد كلمة المرور" hidden>
+
+                    </div>
+
+                    <button id="passBtn" class="change-btn" onclick="changePassword()">
+                        تغيير
+                    </button>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    </div>
+    <script src="{% static 'js/teacher.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result of Test</title>
+       <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#eef4ff;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .result-card{
+            width:500px;
+            background:white;
+            border-radius:20px;
+            padding:40px;
+            text-align:center;
+            box-shadow:0 10px 30px rgba(0,0,0,.15);
+        }
+
+        .icon{
+            font-size:70px;
+            margin-bottom:20px;
+        }
+
+        h1{
+            color:#1d4ed8;
+            margin-bottom:15px;
+        }
+
+        p{
+            color:#666;
+            font-size:20px;
+            margin-bottom:25px;
+        }
+
+        .score{
+            background:#eef4ff;
+            border-radius:15px;
+            padding:20px;
+            margin-bottom:30px;
+        }
+
+        .score h2{
+            color:#333;
+            margin-bottom:10px;
+        }
+
+        .number{
+            font-size:45px;
+            color:#2563eb;
+            font-weight:bold;
+        }
+
+        .btn{
+            display:inline-block;
+            text-decoration:none;
+            background:#2563eb;
+            color:white;
+            padding:15px 35px;
+            border-radius:12px;
+            font-size:18px;
+            transition:.3s;
+        }
+
+        .btn:hover{
+            background:#1d4ed8;
+            transform:scale(1.05);
+        }
+
+    </style>
+
+</head>
+<body>
+   
+<div class="result-card">
+
+    <div class="icon">🎉</div>
+
+    <h1>تم إنهاء الاختبار</h1>
+
+    <p>لقد أنهيت الاختبار بنجاح.</p>
+
+    <div class="score">
+
+        <h2>درجتك</h2>
+
+        <div class="number">
+            {{ score }} / {{ total_marks }}
+        </div>
+
+    </div>
+
+    <a href="{% url 'student' %}" class="btn">
+        العودة للمنصة
+    </a>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <title>Sign Up</title>
+</head>
+
+<body>
+
+    <div class="head">
+        <nav class="navbar">
+            <img src="{% static 'images/logo1.png' %}" alt="logo" class="logo">
+            Smart Physics
+        </nav>
+        <p class="teacher"> MR: Essam Hessan</p>
+    </div>
+    <div class="hero">
+        <div class="hero_text">
+            <h3>تعلم بذكاء ... تفوق بسهولة</h3>
+            <p>أفضل شرح . أقوى أسئلة.متابعة مستمرة</p>
+        </div>
+        <div class="hero_img">
+            <img src="{% static 'images/image2.png' %}" class="image">
+        </div>
+
+    </div>
+
+    <div class="content">
+        <div class="container">
+            <p class="pill-title">شرح مبسط 📚 </p>
+            <p class="pill-desc">ملخصات مرتبة لكل وحدة.</p>
+
+        </div>
+        <div class="container">
+            <p class="pill-title">متابعة مستمرة 📝</p>
+            <p class="pill-desc">اختبارات أسبوعية وتدريبات مستمرة.</p>
+
+        </div>
+        <div class="container">
+            <p class="pill-title">محتوى متجدد 📊</p>
+            <p class="pill-desc">تبعا لما تطلقه وزارة التربية والتعليم </p>
+
+        </div>
+        <div class="container">
+            <p class="pill-title">اختبارات ذكية🎯</p>
+            <p class="pill-desc">امتحانات مشابهة للامتحان النهائي.</p>
+
+        </div>
+    </div>
+    <div class="levels">
+        <h2 class="title">اختر مستواك</h2>
+        <div class="level">
+
+            <div class="level-card">
+                <h3>First Secondary</h3>
+                <br>
+                <p> <a href="#" onclick="handleSubscribeClick()" class="btn-start"> اشترك الان 🚀</a></p>
+
+            </div>
+            <div class="level-card">
+                <h3>Second Secondary</h3>
+                <br>
+                <p> <a href="#" onclick="handleSubscribeClick()" class="btn-start"> اشترك الان 🚀</a></p>
+            </div>
+            <div class="level-card">
+                <h3>Third Secondary</h3>
+                <br>
+                <p> <a href="#" onclick="handleSubscribeClick()" class="btn-start"> اشترك الان 🚀</a></p>
+
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+    {% if messages %}
+    {% for message in messages %}
+    <p style="color:red;">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+
+    <div id="signupmodel">
+
+        <div class="signup-card">
+
+            <button type="button" class="close-btn" onclick="closesignupModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2>Signup</h2>
+
+            <form onsubmit="handleSignup(event)">
+
+                {% csrf_token %}
+
+                <input type="text" name="UserName" placeholder="User Name">
+
+                <input type="password" name="Password" placeholder="Password">
+
+                <div class="levels-radio">
+
+                    <label>
+                        <input type="radio" name="level" value="First">
+                        First Secondary
+                    </label>
+
+                    <label>
+                        <input type="radio" name="level" value="Second">
+                        Second Secondary
+                    </label>
+
+                    <label>
+                        <input type="radio" name="level" value="Third">
+                        Third Secondary
+                    </label>
+
+                </div>
+
+                <input type="email" name="email" placeholder="Your Email" required>
+
+                <input type="email" name="parent_email" placeholder="Parent Email" required>
+
+                <input type="tel" name="phone" placeholder="Your Phone" required>
+
+                <input type="tel" name="parent_phone" placeholder="Parent Phone" required>
+
+                <input type="text" name="address" placeholder="Address">
+
+                <div id="signupMessage"></div>
+                
+                <button type="submit" class="signup-btn">
+                    Create Account
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div id="loginmodel">
+
+        <div class="login-card">
+
+            <button type="button" class="close-btn" onclick="closeloginModal()">
+                <i class="fa-solid fa-xmark">X</i>
+            </button>
+
+            <h2>Login</h2>
+
+            <form onsubmit="handleLogin(event)">
+
+                {% csrf_token %}
+
+                <input type="text" name="UserName" placeholder="User Name">
+
+                <input type="password" name="Password" placeholder="Password">
+
+                <input type="email" name="email" placeholder="Email">
+
+                <button type="submit" class="login-btn">
+                    Login
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="{% static 'js/signup.js' %}"></script>
+</body>
+
+</html>

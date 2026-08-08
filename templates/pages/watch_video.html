@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ lesson.title }}</title>
+
+<style>
+
+body{
+
+background:#111;
+color:white;
+text-align:center;
+user-select:none;
+
+}
+
+iframe{
+
+width:80%;
+height:600px;
+border-radius:15px;
+
+}
+
+.watermark{
+
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:60px;
+color:rgba(255,255,255,.08);
+transform:rotate(-30deg);
+pointer-events:none;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="watermark">
+
+{{ student.username }}
+
+</div>
+
+<h2>{{ lesson.title }}</h2>
+
+<video
+controls
+controlsList="nodownload"
+disablePictureInPicture>
+
+<source src="{{ lesson.video.url }}">
+
+</video>
+
+<script>
+
+document.addEventListener("keydown",function(e){
+
+if(e.ctrlKey && (
+e.key=="s" ||
+e.key=="u" ||
+e.key=="c"
+)){
+
+e.preventDefault();
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
+
